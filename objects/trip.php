@@ -78,12 +78,21 @@ class Trip extends Config {
 
     public function update () {
 
-		$query = "UPDATE
+		if ($this->prioritize) {
+            $query = "UPDATE
 					" . $this->table_name . "
 				SET
 					name = ?, phone = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, coin = ?, price = ?, is_round = ?, details = ?, num_guess = ?, prioritize = ?
 				WHERE
 					id = ?";
+        } else {
+            $query = "UPDATE
+                    " . $this->table_name . "
+                SET
+                    name = ?, phone = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, coin = ?, price = ?, is_round = ?, details = ?, num_guess = ?
+                WHERE
+                    id = ?";
+        }
 
 		$stmt = $this->conn->prepare($query);
 
@@ -113,8 +122,12 @@ class Trip extends Config {
         $stmt->bindParam(10, $this->is_round);
         $stmt->bindParam(11, $this->details);
         $stmt->bindParam(12, $this->num_guess);
-        $stmt->bindParam(13, $this->prioritize);
-        $stmt->bindParam(14, $this->id);
+        if ($this->prioritize) {
+            $stmt->bindParam(13, $this->prioritize);
+            $stmt->bindParam(14, $this->id);
+        } else {
+            $stmt->bindParam(13, $this->id);
+        }
 
 		// execute the query
 		if ($stmt->execute()) return true;

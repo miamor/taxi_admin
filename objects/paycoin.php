@@ -62,7 +62,7 @@ class PayCoin extends Config {
 		else return false;
 	}
 
-    public function getTaxiUsername ($taxiID) {
+    private function getTaxiUsername ($taxiID) {
         $query = "SELECT
 				    username
 				FROM
@@ -76,6 +76,22 @@ class PayCoin extends Config {
 
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['username'];
+    }
+
+    private function getTripInfo ($tripID) {
+        $query = "SELECT
+				    addressfrom, addressto, is_round
+				FROM
+					Trip
+				WHERE id = ?
+                LIMIT 0,1 ";
+
+		$stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $tripID);
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row;
     }
 
     public function readAll () {
@@ -93,10 +109,18 @@ class PayCoin extends Config {
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $row['taxi_username'] = $this->getTaxiUsername($row['taxiID']);
             $row['taxi_username'] = '<a href="'.MAIN_URL.'/paycoin/'.$row['taxi_username'].'">'.$row['taxi_username'].'</a>';
+
+            if ($row['type'] == 0) {
+                $tripInfo = $this->getTripInfo($row['tripID']);
+                $round = ($tripInfo['is_round'] == 1) ? '<i class="fa fa-exchange"></i>' : '<i class="fa fa-long-arrow-right"></i>';
+                $row['tripID'] = '<a href="'.MAIN_URL.'/trip/'.$row['tripID'].'">'.$row['tripID'].'</a>: '.$tripInfo['addressfrom'].' '.$round.' '.$tripInfo['addressto'].' ';
+            }
+
             if ($row['type'] == 0) $type = 'Mua chuyến';
             else if ($row['type'] == -1) $type = 'Trừ tiền do vi phạm';
             else if ($row['type'] == 1) $type = 'Cộng tiền';
             $row['type'] = $type;
+
         //    $row['taxiID'] = '<a href="'.$row[''].'"></a>';
             $this->all_list[] = $row;
         }

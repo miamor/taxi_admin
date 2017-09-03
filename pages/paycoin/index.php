@@ -28,7 +28,7 @@ $config->addJS('dist', "{$page}/list.js");
                     <th>ID</th>
                     <th>Loại</th>
                     <th>Taxi username</th>
-                    <th>Trip ID</th>
+                    <th>Chuyến</th>
                     <th>Tiền</th>
                     <th>Thời gian</th>
                     <th>Chi tiết</th>

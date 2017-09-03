@@ -62,6 +62,46 @@ class PayCoin extends Config {
 		else return false;
 	}
 
+    public function getTaxiUsername ($taxiID) {
+        $query = "SELECT
+				    username
+				FROM
+					Taxi
+				WHERE id = ?
+                LIMIT 0,1 ";
+
+		$stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $taxiID);
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['username'];
+    }
+
+    public function readAll () {
+        $query = "SELECT
+				    *
+				FROM
+					" . $this->table_name . "
+				";
+
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		$this->all_list = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $row['taxi_username'] = $this->getTaxiUsername($row['taxiID']);
+            $row['taxi_username'] = '<a href="'.MAIN_URL.'/paycoin/'.$row['taxi_username'].'">'.$row['taxi_username'].'</a>';
+            if ($row['type'] == 0) $type = 'Mua chuyến';
+            else if ($row['type'] == -1) $type = 'Trừ tiền do vi phạm';
+            else if ($row['type'] == 1) $type = 'Cộng tiền';
+            $row['type'] = $type;
+        //    $row['taxiID'] = '<a href="'.$row[''].'"></a>';
+            $this->all_list[] = $row;
+        }
+        return $this->all_list;
+    }
 
     public function readAllOneTaxi () {
         $query = "SELECT

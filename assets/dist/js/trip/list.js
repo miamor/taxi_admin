@@ -17,6 +17,12 @@ $(document).ready(function () {
             { "data": "price" },
 			{ "data": "is_round" },
 			{ "data": "userid" }
-		]
+		],
+        "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+            console.log(aData);
+            if (aData.taxiid != null) {
+                $(nRow).addClass('taken');
+            }
+        }
 	})
 })

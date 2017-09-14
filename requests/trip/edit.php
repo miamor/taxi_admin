@@ -18,9 +18,15 @@ $trip->is_round = isset($_POST['is_round']) ? $_POST['is_round'] : 0;
 $trip->details = isset($_POST['details']) ? content($_POST['details']) : 0;
 $trip->num_guess = isset($_POST['num_guess']) ? $_POST['num_guess'] : 0;
 $trip->prioritize = isset($_POST['prioritize']) ? $_POST['prioritize'] : null;
+$trip->approve = isset($_POST['approve']) ? $_POST['approve'] : 0;
 
-if ($trip->id && $trip->name && $trip->phone && $trip->from && $trip->to && $trip->time && $trip->price && $trip->coin && $trip->seat && $trip->num_guess) {
-	$add = $trip->update();
-	echo ($add ? 1 : 0);
+//echo json_encode($_POST, JSON_UNESCAPED_UNICODE);
+
+if ($trip->id && $trip->name && $trip->phone && $trip->from && $trip->to && $trip->time && $trip->price && $trip->seat && $trip->num_guess) {
+	$edit = $trip->update();
+	if ($edit) {
+		echo ($trip->approve) ? 1 : 2;
+	} else echo 0;
+	//echo ($edit ? 1 : 0);
 	//echo json_encode($data, JSON_UNESCAPED_UNICODE);
 } else echo -1;

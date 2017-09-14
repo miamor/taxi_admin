@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#buyList').DataTable({
-		"ajax": MAIN_URL+'/requests/trip/readAll.php',
-		"columns": [
+		"ajax": MAIN_URL+'/requests/trip/readAll.php?type=waiting',
+        "columns": [
 			{ "data": "id" },
 			{ "data": "customer_info" },
 			{ "data": "trip_info" },

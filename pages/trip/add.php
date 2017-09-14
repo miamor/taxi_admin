@@ -22,20 +22,6 @@ $config->addJS('dist', "{$page}/{$mode}.js");
 <section class="content">
 
 <form class="add">
-<!--    <div class="form-group">
-        <div class="col-lg-3 control-label">
-            ID người dùng
-        </div>
-        <div class="col-lg-9">
-            <select class="chosen-select form-control" name="userid">
-                <option value="" checked>NULL</option>
-            <?php foreach ($user->all_list as $oneU) {
-                echo '<option value="'.$oneU['id'].'">'.$oneU['name'].' - @'.$oneU['username'].'</option>';
-            } ?>
-            </select>
-        </div>
-        <div class="clearfix"></div>
-    </div> -->
     <div class="form-group">
         <div class="col-lg-3 control-label">
             Tên khách hàng
@@ -55,15 +41,19 @@ $config->addJS('dist', "{$page}/{$mode}.js");
         <div class="clearfix"></div>
     </div>
 
+    <div class="divide"></div>
+
     <div class="form-group">
         <div class="col-lg-3 control-label">
-            Ưu tiên
+            Ưu tiên cho taxi
         </div>
         <div class="col-lg-9">
             <select class="chosen-select form-control" name="prioritize">
-                <option value="0">null</option>
+                <option value="0">Không</option>
             <?php foreach ($taxi->all_list as $oneTaxi) {
-                echo '<option value="'.$oneTaxi['id'].'">'.$oneTaxi['name'].' - @'.$oneTaxi['username'].'</option>';
+                if ($oneTaxi['id'] == $trip->prioritize) $selected = 'selected';
+                else $selected = '';
+                echo '<option '.$selected.' value="'.$oneTaxi['id'].'">'.$oneTaxi['name'].' - @'.$oneTaxi['username'].'</option>';
             } ?>
             </select>
         </div>

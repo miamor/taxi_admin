@@ -14,22 +14,22 @@ class Trip extends Config {
             $query = "INSERT INTO
 					" . $this->table_name . "
 				SET
-					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, prioritize = ?, coin = ?";
+					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, approve = 1, prioritize = ?, coin = ?";
         } else if ($this->prioritize) {
             $query = "INSERT INTO
 					" . $this->table_name . "
 				SET
-					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, prioritize = ?";
+					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, approve = 1, prioritize = ?";
         } else if ($this->coin) {
             $query = "INSERT INTO
 					" . $this->table_name . "
 				SET
-					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, coin = ?";
+					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, approve = 1, coin = ?";
         } else {
             $query = "INSERT INTO
 					" . $this->table_name . "
 				SET
-					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?";
+					name = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, price = ?, is_round = ?, details = ?, phone = ?, num_guess = ?, approve = 1";
         }
 
 		$stmt = $this->conn->prepare($query);
@@ -82,14 +82,14 @@ class Trip extends Config {
             $query = "UPDATE
 					" . $this->table_name . "
 				SET
-					name = ?, phone = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, coin = ?, price = ?, is_round = ?, details = ?, num_guess = ?, prioritize = ?
+					name = ?, phone = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, coin = ?, price = ?, is_round = ?, details = ?, num_guess = ?, approve = ?, prioritize = ?
 				WHERE
 					id = ?";
         } else {
             $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    name = ?, phone = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, coin = ?, price = ?, is_round = ?, details = ?, num_guess = ?
+                    name = ?, phone = ?, addressfrom = ?, addressto = ?, PNR = ?, time = ?, seat = ?, coin = ?, price = ?, is_round = ?, details = ?, num_guess = ?, approve = ?
                 WHERE
                     id = ?";
         }
@@ -122,11 +122,12 @@ class Trip extends Config {
         $stmt->bindParam(10, $this->is_round);
         $stmt->bindParam(11, $this->details);
         $stmt->bindParam(12, $this->num_guess);
+        $stmt->bindParam(13, $this->approve);
         if ($this->prioritize) {
-            $stmt->bindParam(13, $this->prioritize);
-            $stmt->bindParam(14, $this->id);
+            $stmt->bindParam(14, $this->prioritize);
+            $stmt->bindParam(15, $this->id);
         } else {
-            $stmt->bindParam(13, $this->id);
+            $stmt->bindParam(14, $this->id);
         }
 
 		// execute the query
@@ -148,8 +149,24 @@ class Trip extends Config {
 	}
 
 
-    public function readAll () {
-        $cond = '';
+    private function getTaxiUsername ($taxiID) {
+        $query = "SELECT
+				    username
+				FROM
+					Taxi
+				WHERE id = ?
+                LIMIT 0,1 ";
+
+		$stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $taxiID);
+		$stmt->execute();
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['username'];
+    }
+
+    public function readAll ($isApproved) {
+        $cond = "WHERE approve = {$isApproved}";
         $query = "SELECT
 					*
 				FROM
@@ -167,6 +184,20 @@ class Trip extends Config {
             unset($row['rank']);
             $row['status'] = ($row['status'] == 1) ? 'Đã nhận' : 'Chưa nhận';
             $row['is_round'] = ($row['is_round'] == 1) ? 'Hai chiều' : 'Một chiều';
+
+            $pri = $this->getTaxiUsername($row['prioritize']);
+            $row['prioritize'] = '<a href="'.MAIN_URL.'/taxi/'.$row['prioritize'].'">'.$pri.'</a>';
+
+            $taxitaken = $this->getTaxiUsername($row['taxiid']);
+            $row['taxi_taken'] = '<a href="'.MAIN_URL.'/taxi/'.$row['taxiid'].'">'.$taxitaken.'</a>';
+
+            $row['customer_info'] = '<div class="customer-name">'.$row['name'].'</div><div class="customer-phone bold">'.$row['phone'].'</div>';
+            $match = ($trip['is_round'] == 1) ? '<i class="fa fa-exchange"></i>' : '<i class="fa fa-long-arrow-right"></i>';
+            $row['trip_info'] = '<div class="trip-address"><span class="trip-from bold">'.$row['addressfrom'].'</span> '.$match.' <span class="trip-to bold">'.$row['addressto'].'</span></div>
+            <div class="trip-time">Thời gian: <b>'.$row['time'].'</b></div>
+            <div class="trip-pnr">Mã PNR: <b>'.$row['PNR'].'</b></div>
+            <div class="trip-seat">Số chỗ: <b>'.$row['seat'].'</b></div>
+            <div class="trip-num_guess">Số khách: <b>'.$row['num_guess'].'</b></div>';
             $this->all_list[] = $row;
         }
         return $this->all_list;
@@ -194,12 +225,13 @@ class Trip extends Config {
         $this->seat = $row['seat'];
         $this->PNR = $row['PNR'];
         $this->price = $row['price'];
-        $this->coin = $row['coin'];
+        $this->coin = ($row['coin']) ? $row['coin'] : 0;
         $this->is_round = $row['is_round'];
         $this->details = $row['details'];
         $this->userid = $row['userid'];
         $this->num_guess = $row['num_guess'];
         $this->prioritize = $row['prioritize'];
+        $this->approve = $row['approve'];
 
         return ($row['id'] ? $row : null);
     }

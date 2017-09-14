@@ -5,6 +5,7 @@ $(document).ready(function () {
         $.post(MAIN_URL+'/requests/trip/edit.php', $(this).serialize(), function (data) {
             console.log(data);
             if (data == 1) location.href = MAIN_URL+'/trip';
+            else if (data == 2) location.href = MAIN_URL+'/trip?mode=waiting';
         })
         return false
     });

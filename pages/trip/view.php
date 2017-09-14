@@ -22,6 +22,9 @@ $config->addJS('dist', "{$page}/edit.js");
 <section class="content">
 
 <form class="edit">
+    <?php if (!$trip->approve) {
+        echo '<div class="callout callout-warning">Chuyến này chưa được kiểm duyệt. Các đối tác sẽ không thể nhìn thấy.<br/>Xác nhận chuyến bằng cách thêm <b>giá mua ngay</b> và <b>giá khách hàng phải trả</b> rồi bấm <b>Xác nhận</b>.<br/>Hủy chuyến bằng cách bấm <b>Hủy chuyến</b>.<br/>Xóa chuyến bằng cách bấm <b>Xóa</b>.</div>';
+    } ?>
 <!--    <div class="form-group">
         <div class="col-lg-3 control-label">
             ID người dùng
@@ -59,14 +62,15 @@ $config->addJS('dist', "{$page}/edit.js");
         <div class="clearfix"></div>
     </div>
 
+    <div class="divide"></div>
 
     <div class="form-group">
         <div class="col-lg-3 control-label">
-            Ưu tiên
+            Ưu tiên cho taxi
         </div>
         <div class="col-lg-9">
             <select class="chosen-select form-control" name="prioritize">
-                <option value="0">null</option>
+                <option value="0">Không</option>
             <?php foreach ($taxi->all_list as $oneTaxi) {
                 if ($oneTaxi['id'] == $trip->prioritize) $selected = 'selected';
                 else $selected = '';
@@ -136,7 +140,7 @@ $config->addJS('dist', "{$page}/edit.js");
             Yêu cầu xe số chỗ
         </div>
         <div class="col-lg-9">
-            <input type="number" class="form-control" name="seat" value="<?php echo $trip->seat ?>"/>
+            <input type="number" min="4" class="form-control" name="seat" value="<?php echo $trip->seat ?>"/>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -146,33 +150,6 @@ $config->addJS('dist', "{$page}/edit.js");
         </div>
         <div class="col-lg-9">
             <input type="text" class="form-control" name="PNR" value="<?php echo $trip->PNR ?>"/>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-3 control-label">
-            Giá khách hàng trả (nghìn đồng)
-        </div>
-        <div class="col-lg-9">
-            <input type="number" class="form-control" name="price" value="<?php echo $trip->price ?>"/>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-3 control-label">
-            Giá thông tin khách hàng (nghìn đồng)
-        </div>
-        <div class="col-lg-9">
-            <input type="number" class="form-control" name="coin" value="<?php echo $trip->coin ?>"/>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-3 control-label">
-            Giá mua ngay (nghìn đồng)
-        </div>
-        <div class="col-lg-9">
-            <input type="number" class="form-control" disabled value="<?php echo $trip->price - $trip->coin ?>"/>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -198,6 +175,50 @@ $config->addJS('dist', "{$page}/edit.js");
         </div>
         <div class="col-lg-9">
             <textarea name="details" class="form-control"><?php echo $trip->details ?></textarea>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="divide"></div>
+
+    <div class="form-group">
+        <div class="col-lg-3 control-label">
+            Giá khách hàng trả (nghìn đồng)
+        </div>
+        <div class="col-lg-9">
+            <input type="number" min="0" class="form-control" name="price" value="<?php echo $trip->price ?>"/>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-3 control-label">
+            Giá thông tin khách hàng (nghìn đồng)
+        </div>
+        <div class="col-lg-9">
+            <input type="number" min="0" class="form-control" name="coin" value="<?php echo $trip->coin ?>"/>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-3 control-label">
+            Giá mua ngay (nghìn đồng)
+        </div>
+        <div class="col-lg-9">
+            <input type="number" class="form-control" disabled value="<?php echo $trip->price - $trip->coin ?>"/>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-3 control-label">
+            Xác nhận
+        </div>
+        <div class="col-lg-9">
+            <label class="radio">
+                <input type="radio" name="approve" <?php if ($trip->approve == 0) echo 'checked' ?> value="0"/> Không đồng ý hiển thị
+            </label>
+            <label class="radio">
+                <input type="radio" name="approve" <?php if ($trip->approve == 1) echo 'checked' ?> value="1"/> Xác nhận và đồng ý hiển thị
+            </label>
         </div>
         <div class="clearfix"></div>
     </div>

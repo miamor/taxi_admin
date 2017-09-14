@@ -4,7 +4,8 @@ include '../../objects/trip.php';
 
 $trip = new Trip();
 
-$data = array('data' => $trip->readAll());
+$isApproved = (isset($_GET['type'])) ? 0 : 1;
+$data = array('data' => $trip->readAll($isApproved));
 
 echo json_encode($data, JSON_UNESCAPED_UNICODE);
 

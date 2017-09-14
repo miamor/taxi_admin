@@ -177,6 +177,7 @@ $config->addJS('dist', 'main.js'); ?>
               </a>
               <ul class="treeview-menu">
 				<li><a href="<?php echo MAIN_URL ?>/trip"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+                <li><a href="<?php echo MAIN_URL ?>/trip?mode=waiting"><i class="fa fa-circle-o"></i> Chưa kiểm duyệt</a></li>
                 <li><a href="<?php echo MAIN_URL ?>/trip?mode=add"><i class="fa fa-circle-o"></i> Thêm chuyến</a></li>
               </ul>
             </li>
@@ -186,8 +187,8 @@ $config->addJS('dist', 'main.js'); ?>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-				<li><a href="<?php echo MAIN_URL ?>/taxi"><i class="fa fa-circle-o"></i> Danh sách</a></li>
-                <li><a href="<?php echo MAIN_URL ?>/taxi?mode=add"><i class="fa fa-circle-o"></i> Thêm</a></li>
+                <li><a href="<?php echo MAIN_URL ?>/taxi"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+                <li><a href="<?php echo MAIN_URL ?>/taxi?mode=add"><i class="fa fa-circle-o"></i> Thêm đối tác</a></li>
               </ul>
             </li>
 			<li>

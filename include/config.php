@@ -5,12 +5,6 @@ error_reporting(E_ERROR | E_PARSE);
 $__pattern = '/taxi';
 
 define('MAIN_PATH', './');
-define('MAIN_PATH_EXEC', '/opt/lampp/htdocs'.$__pattern.'/');
-/*define('HOST_URL', '//localhost'.$__pattern);
-define('MAIN_URL', 'http:'.HOST_URL);
-define('HOST_URL', '//192.168.8.100'.$__pattern);
-*/
-define('REQUEST_URL', 'http://localhost:5000');
 define('HOST_URL', '//localhost'.$__pattern);
 define('MAIN_URL', 'http:'.HOST_URL);
 define('ASSETS', MAIN_URL.'/assets');
@@ -18,25 +12,14 @@ define('CSS', ASSETS.'/dist/css');
 define('JS', ASSETS.'/dist/js');
 define('IMG', ASSETS.'/dist/img');
 define('PLUGINS', ASSETS.'/plugins');
-//define('GG_API_KEY', 'AIzaSyA5xbqBF1tGx96z6-QLhGGmvqIQ5LUrt4s');
-define('GG_API_KEY', 'AIzaSyACkc-PYhlnPUWJaV2GlcCiEcuJujZsMdc');
-define('GG_CX_ID', '014962602028620469778:yf4br-mf6mk');
-/*define('EXEC_PATH_C_CPP', 'I:\Dev-Cpp\MinGW64\bin/');
-define('EXEC_PATH_JAVA', 'I:\Java\jdk1.8.0_91\bin/');
-define('EXEC_PATH_PYTHON', 'I:\Python2.7.12/');
-*/define('GOODREADS_KEY', 'Nw65U07B93O4X8l3SUTw');
 
 $__page = str_replace($__pattern.'/', '', $_SERVER['REQUEST_URI']);
-define('__HOST', 'ubuntu');
-//define('__HOST', 'window');
-
 
 // Start config
 $config = new Config();
 
 if (check($__page, '?') > 0) $__page = $__page.'&';
 else $__page = $__page;
-
 
 $__pageAr = array_values(array_filter(explode('/', explode('?', rtrim($__page))[0])));
 $subpage = null;
@@ -61,25 +44,6 @@ if ($config->__request) header('Content-Type: application/json; charset=utf-8');
 else header('Content-Type: text/html; charset=utf-8');
 // End config
 
-
-define('FB_APP_ID', '227904834368737');
-define('FB_APP_SECRET', '7a2ea311a4ca8f5263a71cf326763d38');
-
-/*
-require_once 'Facebook/autoload.php';
-use Facebook\FacebookSession;
-use Facebook\FacebookRedirectLoginHelper;
-use Facebook\FacebookRequest;
-use Facebook\FacebookResponse;
-use Facebook\FacebookSDKException;
-use Facebook\FacebookRequestException;
-use Facebook\FacebookAuthorizationException;
-use Facebook\GraphObject;
-use Facebook\Entities\AccessToken;
-use Facebook\HttpClients\FacebookCurlHttpClient;
-use Facebook\HttpClients\FacebookHttpable;
-*/
-
 class Config {
 
 	// specify your own database credentials
@@ -96,12 +60,7 @@ class Config {
 
 	public function __construct () {
 		$this->JS = '';
-/*		$this->FB = new Facebook\Facebook([
-			'app_id' => FB_APP_ID, // Replace {app-id} with your app id
-			'app_secret' => FB_APP_SECRET,
-			'default_graph_version' => 'v2.2',
-		]);
-*/		$this->currentURL = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$this->currentURL = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		$this->u = (isset($_SESSION['username'])) ? $_SESSION['username'] : null;
 		if ($this->getConnection()) {
 			$this->me = $this->getUserInfo();

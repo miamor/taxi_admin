@@ -11,7 +11,7 @@ $config->addJS('dist', 'main.js'); ?>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TAXI</title>
+    <title>Trang quản lý Đông Dương D.C</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -50,9 +50,9 @@ $config->addJS('dist', 'main.js'); ?>
         <!-- Logo -->
         <a href="<?php echo MAIN_URL ?>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>TAXI</b></span>
+          <span class="logo-mini"><b>Đông Dương D.C</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Taxi</b></span>
+          <span class="logo-lg"><b>Đông Dương D.C</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -160,7 +160,7 @@ $config->addJS('dist', 'main.js'); ?>
           <!-- search form -->
           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
+              <input type="text" name="q" class="form-control" placeholder="Tìm kiếm...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -169,21 +169,21 @@ $config->addJS('dist', 'main.js'); ?>
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">MAIN NAVIGATION</li>
+            <li class="header">Giao diện quản lý</li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>Chuyến</span>
 				<i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-				<li><a href="<?php echo MAIN_URL ?>/trip"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+		<li><a href="<?php echo MAIN_URL ?>/trip"><i class="fa fa-circle-o"></i> Danh sách</a></li>
                 <li><a href="<?php echo MAIN_URL ?>/trip?mode=waiting"><i class="fa fa-circle-o"></i> Chưa kiểm duyệt</a></li>
                 <li><a href="<?php echo MAIN_URL ?>/trip?mode=add"><i class="fa fa-circle-o"></i> Thêm chuyến</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="<?php echo MAIN_URL ?>/taxi">
-                <i class="fa fa-edit"></i> <span>Đối tác</span>
+                <i class="fa fa-star"></i> <span>Đối tác</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
@@ -193,7 +193,7 @@ $config->addJS('dist', 'main.js'); ?>
             </li>
 			<li>
               <a href="<?php echo MAIN_URL ?>/paycoin">
-                <i class="fa fa-edit"></i> <span>Lịch sử giao dịch</span>
+                <i class="fa fa-check"></i> <span>Lịch sử giao dịch</span>
               </a>
             </li>
 			<li class="treeview">
@@ -202,10 +202,22 @@ $config->addJS('dist', 'main.js'); ?>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-				<li><a href="<?php echo MAIN_URL ?>/infrienge"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+		<li><a href="<?php echo MAIN_URL ?>/infrienge"><i class="fa fa-circle-o"></i> Danh sách</a></li>
                 <li><a href="<?php echo MAIN_URL ?>/infrienge?mode=add"><i class="fa fa-circle-o"></i> Thêm</a></li>
               </ul>
             </li>
+
+	    <li class="treeview">
+              <a href="<?php echo MAIN_URL ?>/promotion">
+                <i class="fa fa-heart"></i> <span>Thông báo khuyến mãi</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo MAIN_URL ?>/promotion"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+                <li><a href="<?php echo MAIN_URL ?>/promotion?mode=add"><i class="fa fa-circle-o"></i> Thêm</a></li>
+              </ul>
+            </li>
+
           </ul>
         </section>
         <!-- /.sidebar -->

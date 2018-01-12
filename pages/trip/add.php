@@ -125,7 +125,7 @@ $config->addJS('dist', "{$page}/{$mode}.js");
     </div>
     <div class="form-group">
         <div class="col-lg-3 control-label">
-            PNR
+            Mã chuyến bay
         </div>
         <div class="col-lg-9">
             <input type="text" class="form-control" name="PNR"/>
@@ -177,8 +177,8 @@ $config->addJS('dist', "{$page}/{$mode}.js");
         </div>
 
     <div class="add-form-submit center">
-        <input type="reset" value="Reset"/>
-        <input type="submit" value="Submit"/>
+        <input type="reset" value="Nhập lại"/>
+        <input type="submit" value="Hoàn tất"/>
     </div>
 </form>
 

@@ -1,10 +1,10 @@
 <?php
 include '../../include/config.php';
-include '../../objects/paycoin.php';
+include '../../objects/promotion.php';
 
-$paycoin = new PayCoin();
+$promotion = new Promotion();
 
-$hist = $paycoin->readAll();
+$hist = $promotion->readAll();
 $data = array('data' => $hist);
 
 echo json_encode($data, JSON_UNESCAPED_UNICODE);

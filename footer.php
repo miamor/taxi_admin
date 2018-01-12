@@ -2,9 +2,9 @@
 
 <footer class="main-footer">
   <div class="pull-right hidden-xs">
-	<b>Version</b> 2.3.0
+	<b>Admin page phiên bản</b> 1.0.0
   </div>
-  <strong>taxi</strong> All rights reserved.
+  <strong>Đông Dương D.C</strong> bản quyền mọi nội dung.
 </footer>
 
 <div class="popup hide"><div class="popup-inner">

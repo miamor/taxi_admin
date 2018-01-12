@@ -46,6 +46,6 @@ RewriteBase /taxi/
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 
-RewriteRule ^((?!(search|user|login|logout|noti|trip|taxi|paycoin|infrienge))[^/].+)$ index.php?page=$1
+RewriteRule ^((?!(search|user|login|logout|noti|trip|taxi|paycoin|infrienge|promotion))[^/].+)$ index.php?page=$1
 
-RewriteRule ^((search|user|login|logout|noti|trip|taxi|paycoin|infrienge).*) index.php?page=$1
+RewriteRule ^((search|user|login|logout|noti|trip|taxi|paycoin|infrienge|promotion).*) index.php?page=$1

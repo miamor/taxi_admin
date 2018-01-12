@@ -28,6 +28,7 @@ $config->addJS('dist', "{$page}/oneTaxi.js");
                 <tr>
                   <th>Thời gian</th>
                   <th>Lý do</th>
+		  <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>

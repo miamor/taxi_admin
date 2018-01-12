@@ -224,9 +224,9 @@ $config->addJS('dist', "{$page}/edit.js");
     </div>
 
     <div class="add-form-submit center">
-        <input class="btn btn-default" type="reset" value="Reset"/>
-        <input class="btn btn-success" type="submit" value="Submit"/>
-        <a id="delete_trip" href="#" class="btn btn-danger">Xoá</a>
+        <input class="btn btn-default" type="reset" value="Nhập lại"/>
+        <input class="btn btn-success" type="submit" value="Hoàn tất"/>
+        <a id="delete_trip" href="#" class="btn btn-danger">Xoá chuyến</a>
     </div>
 </form>
 

@@ -1,7 +1,7 @@
 <?php
-class Infrienge extends Config {
+class Promotion extends Config {
 
-    private $table_name = "Infrienge";
+    private $table_name = "Promotion";
 
     public function __construct() {
 		parent::__construct();
@@ -13,18 +13,21 @@ class Infrienge extends Config {
 			$query = "INSERT INTO
 					" . $this->table_name . "
 				SET
-					taxiID = ?, time = ?, details = ?";
+					userID = ?, timeFrom = ?, timeTo = ?, details = ?, status = True";
 
 		$stmt = $this->conn->prepare($query);
 
 		// posted values
-        $this->time = htmlspecialchars(strip_tags($this->time));
-        $this->details = content($this->details);
+	$this->userID = htmlspecialchars(strip_tags($this->userID));
+        $this->timeFrom = htmlspecialchars(strip_tags($this->timeFrom));
+	$this->timeTo = htmlspecialchars(strip_tags($this->timeTo));
+	$this->details = htmlspecialchars(strip_tags($this->details));
 
         // bind parameters
-        $stmt->bindParam(1, $this->taxiid);
-        $stmt->bindParam(2, $this->time);
-        $stmt->bindParam(3, $this->details);
+        $stmt->bindParam(1, $this->userID);
+        $stmt->bindParam(2, $this->timeFrom);
+	$stmt->bindParam(3, $this->timeTo);
+        $stmt->bindParam(4, $this->details);
 
         // execute the query
 		if ($stmt->execute()) {
@@ -33,16 +36,16 @@ class Infrienge extends Config {
 			return false;
     }
 
-    public function getTaxiUsername ($taxiID) {
+    public function getUserUsername ($userID) {
         $query = "SELECT
 				    username
 				FROM
-					Taxi
+					User
 				WHERE id = ?
                 LIMIT 0,1 ";
 
 		$stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $taxiID);
+        $stmt->bindParam(1, $userID);
 		$stmt->execute();
 
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -58,33 +61,33 @@ class Infrienge extends Config {
 
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
-
 		$this->all_list = array();
 
-		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $row['taxi_username'] = $this->getTaxiUsername($row['taxiID']);
-            $row['taxi_username'] = '<a href="'.MAIN_URL.'/infrienge/'.$row['taxi_username'].'">'.$row['taxi_username'].'</a>';
-        //    $row['taxiID'] = '<a href="'.$row[''].'"></a>';
+	//echo $query.'~';
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//		print_r($row);
+            $row['user_username'] = $this->getUserUsername($row['userID']);
+            $row['user_username'] = '<a href="'.MAIN_URL.'/promotion/'.$row['user_username'].'">'.$row['user_username'].'</a>';
             $this->all_list[] = $row;
         }
         return $this->all_list;
     }
 
-    public function readAllOneTaxi () {
+    public function readAllOneUser () {
         $query = "SELECT
-				    time,details
+				    timeFrom,timeTo,details,status
 				FROM
 					" . $this->table_name . "
-				WHERE taxiID = ?";
+				WHERE userID = ?";
 
 		$stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->taxiid);
+        $stmt->bindParam(1, $this->userID);
 		$stmt->execute();
 
 		$this->all_list = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        //    $row['username'] = '<a href="'.MAIN_URL.'/taxi/'.$row['username'].'"></a>';
+//            $row['username'] = '<a href="'.MAIN_URL.'/user/'.$row['username'].'"></a>';
             $this->all_list[] = $row;
         }
         return $this->all_list;
@@ -106,17 +109,11 @@ class Infrienge extends Config {
         if ($row['id']) {
             $this->id = $row['id'];
             $this->username = $row['username'];
+            $this->password = $row['password'];
             $this->name = $row['name'];
             $this->phone = $row['phone'];
-            $this->idcard = $row['idcard'];
-            $this->idcar = $row['idcar'];
-            $this->typecar = $row['typecar'];
-            $this->seat = $row['seat'];
-            $this->coin = $row['coin'];
+            $this->address = $row['address'];
             $this->rank = $row['rank'];
-            $this->timelife = $row['timelife'];
-            $this->status = $row['status'];
-            $this->idboss = $row['idboss'];
         }
 
         return ($row['id'] ? $row : null);

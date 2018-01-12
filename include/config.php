@@ -10,8 +10,8 @@ define('MAIN_PATH_EXEC', '/opt/lampp/htdocs'.$__pattern.'/');
 define('MAIN_URL', 'http:'.HOST_URL);
 define('HOST_URL', '//192.168.8.100'.$__pattern);
 */
-define('REQUEST_URL', 'http://localhost:5000');
-define('HOST_URL', '//localhost'.$__pattern);
+//define('REQUEST_URL', 'http://localhost:5000');
+define('HOST_URL', '//www.datxenoibai.com'.$__pattern);
 define('MAIN_URL', 'http:'.HOST_URL);
 define('ASSETS', MAIN_URL.'/assets');
 define('CSS', ASSETS.'/dist/css');
@@ -86,7 +86,7 @@ class Config {
 	private $host = "localhost";
 	private $db_name = "taxi";
 	private $username = "root";
-	private $password = "";
+	private $password = "123456";
 	private $port = "3306";
 	protected $conn;
 	public $u;

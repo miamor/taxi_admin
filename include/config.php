@@ -86,7 +86,7 @@ class Config {
 	private $host = "localhost";
 	private $db_name = "taxi";
 	private $username = "root";
-	private $password = "";
+	private $password = "abc123";
 	private $port = "3306";
 	protected $conn;
 	public $u;

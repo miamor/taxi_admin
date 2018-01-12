@@ -27,6 +27,7 @@ $config->addJS('dist', "{$page}/list_waiting.js");
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Taxi bán</th>
                     <th>Thông tin khách hàng</th>
                     <th>Thông tin chuyến</th>
                     <th>Tình trạng</th>

@@ -3,6 +3,7 @@ $(document).ready(function () {
 		"ajax": MAIN_URL+'/requests/trip/readAll.php?type=waiting',
         "columns": [
 			{ "data": "id" },
+			{ "data": "taxi_sell_info" },
 			{ "data": "customer_info" },
 			{ "data": "trip_info" },
 			{ "data": "status" },

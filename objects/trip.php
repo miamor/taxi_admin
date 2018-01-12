@@ -191,6 +191,9 @@ class Trip extends Config {
             $taxitaken = $this->getTaxiUsername($row['taxiid']);
             $row['taxi_taken'] = '<a href="'.MAIN_URL.'/taxi/'.$row['taxiid'].'">'.$taxitaken.'</a>';
 
+            $taxisell = $this->getTaxiUsername($row['taxi_sell']);
+            $row['taxi_sell_info'] = '<a href="'.MAIN_URL.'/taxi/'.$row['taxi_sell'].'">'.$taxisell.'</a>';
+
             $row['customer_info'] = '<div class="customer-name">'.$row['name'].'</div><div class="customer-phone bold">'.$row['phone'].'</div>';
             $match = ($trip['is_round'] == 1) ? '<i class="fa fa-exchange"></i>' : '<i class="fa fa-long-arrow-right"></i>';
             $row['trip_info'] = '<div class="trip-address"><span class="trip-from bold">'.$row['addressfrom'].'</span> '.$match.' <span class="trip-to bold">'.$row['addressto'].'</span></div>

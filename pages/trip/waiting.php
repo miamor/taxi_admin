@@ -35,7 +35,8 @@ $config->addJS('dist', "{$page}/list_waiting.js");
                     <th>Giá khách trả</th>
                     <th>Ưu tiên</th>
                     <th>Taxi đã nhận</th>
-              </tr>
+                    <th class="th-none">Action</th>
+                </tr>
             </thead>
             <tbody>
             </tbody>

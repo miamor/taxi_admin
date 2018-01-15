@@ -34,6 +34,7 @@ $config->addJS('dist', "{$page}/list.js");
                   <th>Giá khách trả</th>
                   <th>Ưu tiên</th>
                   <th>Taxi đã nhận</th>
+                  <th class="th-none">Action</th>
               </tr>
             </thead>
             <tbody>

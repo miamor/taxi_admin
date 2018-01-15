@@ -75,6 +75,33 @@ class Trip extends Config {
 			return false;
     }
 
+    public function confirm () {
+        $query = "UPDATE
+            " . $this->table_name . "
+        SET
+            approve = 1
+        WHERE
+            id = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+		if ($stmt->execute()) return true;
+		else return false;
+    }
+
+    public function unconfirm () {
+        $query = "UPDATE
+            " . $this->table_name . "
+        SET
+            approve = 0
+        WHERE
+            id = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+		if ($stmt->execute()) return true;
+		else return false;
+    }
 
     public function update () {
 
@@ -179,7 +206,7 @@ class Trip extends Config {
 		$this->all_list = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $row['id'] = '<a href="'.MAIN_URL.'/trip/'.$row['id'].'">'.$row['id'].'</a>';
+            //$row['id'] = '<a href="'.MAIN_URL.'/trip/'.$row['id'].'">'.$row['id'].'</a>';
             unset($row['details']);
             unset($row['rank']);
             $row['status'] = ($row['status'] == 1) ? 'Đã nhận' : 'Chưa nhận';
